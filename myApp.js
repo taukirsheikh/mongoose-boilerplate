@@ -15,9 +15,16 @@ const createAndSavePerson = (done) => {
     done(null, data); // If successful, return the saved document
   });
 };
+const arrayOfPeople = [
+  { name: "Jane Doe", age: 25, favoriteFoods: ["burgers", "fries"] },
+  { name: "Mike Doe", age: 35, favoriteFoods: ["spaghetti", "meatballs"] }
+]
 
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, function (err, data) {
+    if (err) return console.error(err);
+    done(null, data); // If successful, return the saved documents
+  });
 };
 
 const findPeopleByName = (personName, done) => {
