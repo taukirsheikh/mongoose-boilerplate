@@ -4,7 +4,16 @@ const {personSchema} = require('./schemas/personSchema');
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 let Person=mongoose.model('Person',personSchema);
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  const newPerson = new Person({
+    name: "John Doe",
+    age: 30,
+    favoriteFoods: ["pizza", "tacos"]
+  });
+
+  newPerson.save(function (err, data) {
+    if (err) return console.error(err);
+    done(null, data); // If successful, return the saved document
+  });
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
