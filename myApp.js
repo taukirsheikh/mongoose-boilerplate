@@ -52,9 +52,27 @@ const findPersonById = (personId, done) => {
 };
 
 const findEditThenSave = (personId, done) => {
-  const foodToAdd = "hamburger";
+   // Find the person by ID
+   Person.findById(personId, (err, person) => {
+    if (err) {
+      return done(err); // Pass the error to the callback
+    }
 
-  done(null /*, data*/);
+    if (!person) {
+      return done(new Error("Person not found")); // Handle case where no document is found
+    }
+
+    // Add "hamburger" to favoriteFoods
+    person.favoriteFoods.push("hamburger");
+
+    // Save the updated document
+    person.save((err, updatedPerson) => {
+      if (err) {
+        return done(err); // Pass the error if save fails
+      }
+      done(null, updatedPerson); // Pass the updated document to the callback
+    });
+  });
 };
 
 const findAndUpdate = (personName, done) => {
